@@ -3,7 +3,8 @@
         "strict": true,
         "target": "ESNext",
         "module": "NodeNext",
-        "outDir": "../../dist/backend-electron",
+        "outDir": "dist/backend-electron",
         "skipLibCheck": true
     },
+    "include": ["src/desktop-backend"]
 }
