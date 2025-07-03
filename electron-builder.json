@@ -1,0 +1,9 @@
+{
+    "appId": "com.doukous.choc",
+    "files": ["dist"],
+    "icon": "./icon.png",
+    "linux": {
+        "target": "AppImage",
+        "category": "Utility"
+    }
+}
