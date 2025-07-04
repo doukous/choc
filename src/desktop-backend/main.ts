@@ -1,14 +1,13 @@
 import { createCanvas, registerFont } from 'canvas'
-import { app, BrowserWindow, ipcMain, IpcMainEvent, Menu, nativeImage, Tray } from 'electron'
+import { app, BrowserWindow, ipcMain, type IpcMainEvent, Menu, nativeImage, Tray } from 'electron'
 import path from 'path'
 
 let mainWindow : BrowserWindow | null = null
 
-let fontUrl = path.join(app.getAppPath(), 'src/desktop-backend/assets/Roboto.ttf')
-
-if (process.env.NODE_ENV !== 'dev') {
-    fontUrl = path.join(app.getAppPath(), 'dist/backend-electron/assets/Roboto.ttf')
-}
+const fontUrl = app.isPackaged ? 
+    path.join(process.resourcesPath, 'public/fonts/Roboto.ttf')
+    :
+    path.join(app.getAppPath(), 'public/fonts/Roboto.ttf')
 
 registerFont(fontUrl, {family: 'roboto'})
 
@@ -19,16 +18,16 @@ function setFocusOnWindow() {
 }
 
 function createTimerIcon(value: string) {
-    const image = createCanvas(48, 30)
+    const image = createCanvas(52, 30)
     const ctx = image.getContext('2d')
-    ctx.fillStyle = 'green'
-    ctx.roundRect(0, 5, 48, 20, 10)
+    ctx.fillStyle = '#32d02f'
+    ctx.roundRect(0, 5, 52, 20, 10)
     ctx.fill()
 
     ctx.fillStyle = 'white'
-    ctx.font = '13px roboto bold'
+    ctx.font = '13px bold roboto'
     ctx.textAlign = 'center'
-    ctx.fillText(value, 24, 20)
+    ctx.fillText(value, 26, 20)
 
     return image.toBuffer()
 }
@@ -38,19 +37,21 @@ function createWindow() {
         webPreferences: {
             preload: path.join(
                 app.getAppPath(), 
-                process.env.NODE_ENV === 'dev' ? '.' : '..' , 
+                app.isPackaged ? '..' : '.' , 
                 '/dist/backend-electron/preload.cjs'
             )
-        }
+        },
+        width: 400, height: 400
     })
 
-    if (process.env.NODE_ENV === 'dev')
+    if (! app.isPackaged)
         mainWindow.loadURL('http://localhost:5123')
 
     else
         mainWindow.loadFile(path.join(app.getAppPath(), 'dist/frontend/index.html'))
 
-    mainWindow.setPosition(1110, 200)
+    mainWindow.setPosition(1400, 200)
+
 }
 
 let tray: Tray | null = null
@@ -74,9 +75,18 @@ function setTimerTrayValue(_event: IpcMainEvent, minute: number, second: number)
     else {
         const menu = Menu.buildFromTemplate(
             [
-                {label: 'Play', click: () => mainWindow?.webContents.send('set-action', 'play')},
-                {label: 'Pause', click: () => mainWindow?.webContents.send('set-action', 'pause')},
-                {label: 'Reset', click: () => mainWindow?.webContents.send('set-action', 'reset')}
+                {
+                    label: 'Play', 
+                    click: () => mainWindow?.webContents.send('set-action', 'play')
+                },
+                {
+                    label: 'Pause', 
+                    click: () => mainWindow?.webContents.send('set-action', 'pause')
+                },
+                {
+                    label: 'Reset', 
+                    click: () => mainWindow?.webContents.send('set-action', 'reset')
+                }
             ]
         )
 
@@ -99,6 +109,3 @@ app.whenReady().then(() => {
     })
 })
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
-})
