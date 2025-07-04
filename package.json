@@ -2,6 +2,8 @@
   "name": "choc",
   "private": true,
   "version": "0.1.0",
+  "author": "Mohamed Doucouré <mohamed.doucoure@protonmail.com>",
+  "description": "an pomodoro timer and a tasks manager",
   "type": "module",
   "main": "dist/backend-electron/main.js",
   "scripts": {
