@@ -6,20 +6,21 @@
   "main": "dist/backend-electron/main.js",
   "scripts": {
     "start": "npm-run-all --parallel dev:browser dev:electron",
-    "start:nodemon": "nodemon -w ./src/desktop-backend -e ts,cts --exec 'npm start'",
+    "start:nodemon": "nodemon -w ./src/desktop-backend -e ts,mts --exec 'npm start'",
     "dev:browser": "vite",
     "dev:electron": "npm run transpile:electron; NODE_ENV=dev electron .",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "transpile:electron": "tsc --project src/desktop-backend/tsconfig.json",
+    "transpile:electron": "tsc --project tsconfig.electron.json",
     "package": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
     "canvas": "^3.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.6.3"
+    "react-router": "^7.6.3",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
