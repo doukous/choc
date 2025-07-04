@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { usePomodoroStore } from "../store"
 
 export default function Home() {
   const navigate = useNavigate()
+  const {  changeConfig } = usePomodoroStore()
+
   const [workTime, setWorkTime] = useState(25)
   const [shortBreakTime, setShortBreakTime] = useState(5)
   const [longBreakTime, setLongBreakTime] = useState(15)
@@ -10,7 +13,7 @@ export default function Home() {
 
 
   function goToTimer() {
-    const data = {
+    const data: Pomodoro = {
       title: 'default',
       timers: {
         work: workTime,
@@ -20,8 +23,7 @@ export default function Home() {
       numberOfSessions: sessionsNumber
     }
 
-    sessionStorage.setItem('pomodoro-params', JSON.stringify(data))
-    
+    changeConfig(data)
     navigate("/timer")
   }
 

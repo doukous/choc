@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react"
 import { NavLink } from "react-router"
+import { usePomodoroStore } from "../store"
 
 const PomodoroTimerStep = {
     work: 'work',
@@ -10,33 +11,9 @@ const PomodoroTimerStep = {
 
 type PomodoroStepType = (typeof PomodoroTimerStep)[keyof typeof PomodoroTimerStep]
 
-type Pomodoro = {
-    title: string,
-    timers: {
-        work: number,
-        shortBreak: number,
-        longBreak: number
-    },
-    numberOfSessions: number
-}
-
-
-const fallbackData = {
-    title: 'fallback',
-    timers: {
-        work: 7,
-        shortBreak: 3,
-        longBreak: 4
-    },
-    numberOfSessions: 2
-}
-
-let pomodoroParams: Pomodoro = fallbackData
-const sessionData: string | null = sessionStorage.getItem('pomodoro-params')
-pomodoroParams = sessionData && JSON.parse(sessionData)
-
-
 export default function Timer() {
+    const { pomodoroConfig } = usePomodoroStore()
+
     const [timer, setTimer] = useState({'minutes': 0, 'seconds': 0})
     const [isRunning, setIsRunning] = useState(false)
     const timerId : React.RefObject<null | NodeJS.Timeout> = useRef(null)
@@ -54,7 +31,7 @@ export default function Timer() {
 
     function handleReset() {
         setIsRunning(false)
-        setTimer((prev) => ({...prev, seconds: pomodoroParams.timers[PomodoroTimerStep[currentStep]]}))
+        setTimer((prev) => ({...prev, seconds: pomodoroConfig.timers[PomodoroTimerStep[currentStep]]}))
     }
 
     useEffect(() => {
@@ -94,7 +71,7 @@ export default function Timer() {
                         window.appWindowHandler.setFocus()
                         switch (currentStep) {
                             case PomodoroTimerStep.work:
-                                if (sesssionsDone === pomodoroParams.numberOfSessions) {
+                                if (sesssionsDone === pomodoroConfig.numberOfSessions) {
                                     setCurrentStep(PomodoroTimerStep.longBreak)
                                 }
 

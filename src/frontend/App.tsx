@@ -1,4 +1,3 @@
-// import { BrowserRouter, Routes, Route } from "react-router"
 import { HashRouter, Route, Routes } from "react-router"
 import Home from "./pages/Home"
 import Timer from "./pages/Timer"
