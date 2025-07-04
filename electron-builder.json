@@ -9,7 +9,11 @@
     "extraResources": [
         {
             "from": "public/",
-            "to": "dist/public/"
+            "to": "public/"
+        },
+        {
+            "from": "icons/",
+            "to": "icons/"
         }
     ]
 }

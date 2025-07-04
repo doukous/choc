@@ -19,6 +19,7 @@ declare global {
     tray: {
       setTimerValue: (minute: number, second: number) => void
       onTrayAction: (callback: (action: string) => void) => void
+      setMainIcon: () => void
     }
   }
 }

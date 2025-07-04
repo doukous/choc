@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { usePomodoroStore } from "../store"
 
@@ -10,7 +10,6 @@ export default function Home() {
   const [shortBreakTime, setShortBreakTime] = useState(5)
   const [longBreakTime, setLongBreakTime] = useState(15)
   const [sessionsNumber, setSessionsNumber] = useState(4)
-
 
   function goToTimer() {
     const data: Pomodoro = {
@@ -26,6 +25,10 @@ export default function Home() {
     changeConfig(data)
     navigate("/timer")
   }
+
+  useEffect(() => {
+    window.tray.setMainIcon()
+  }, [])
 
   return (
     <>
