@@ -5,5 +5,11 @@
     "linux": {
         "target": "AppImage",
         "category": "Utility"
-    }
+    },
+    "extraResources": [
+        {
+            "from": "public/",
+            "to": "dist/public/"
+        }
+    ]
 }
