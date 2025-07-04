@@ -15,7 +15,6 @@ function createWindow() {
         webPreferences: {
             preload: path.join(
                 app.getAppPath(), 
-                app.isPackaged ? '..' : '.' , 
                 '/dist/backend-electron/preload.cjs'
             )
         },
