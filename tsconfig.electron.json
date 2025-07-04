@@ -6,5 +6,5 @@
         "outDir": "dist/backend-electron",
         "skipLibCheck": true
     },
-    "include": ["src/desktop-backend", "public"]
+    "include": ["src/desktop-backend"]
 }

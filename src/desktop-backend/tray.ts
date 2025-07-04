@@ -8,9 +8,9 @@ const fontUrl = app.isPackaged ?
     path.join(app.getAppPath(), 'public/fonts/Roboto.ttf')
 
 const iconsPath = app.isPackaged ?
-    path.join(process.resourcesPath, 'icons')
+    path.join(process.resourcesPath, 'public/icons')
     :
-    path.join(app.getAppPath(), 'icons')
+    path.join(app.getAppPath(), 'public/icons')
 
 registerFont(fontUrl, {family: 'roboto'})
 
