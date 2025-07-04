@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react"
+import { NavLink } from "react-router"
 
 const PomodoroTimerStep = {
     work: 'work',
@@ -19,8 +20,9 @@ type Pomodoro = {
     numberOfSessions: number
 }
 
-const sampleData : Pomodoro = {
-    title: 'pomodoro title',
+
+const fallbackData = {
+    title: 'fallback',
     timers: {
         work: 7,
         shortBreak: 3,
@@ -28,6 +30,11 @@ const sampleData : Pomodoro = {
     },
     numberOfSessions: 2
 }
+
+let pomodoroParams: Pomodoro = fallbackData
+const sessionData: string | null = sessionStorage.getItem('pomodoro-params')
+pomodoroParams = sessionData && JSON.parse(sessionData)
+
 
 export default function Timer() {
     const [timer, setTimer] = useState({'minutes': 0, 'seconds': 0})
@@ -47,7 +54,7 @@ export default function Timer() {
 
     function handleReset() {
         setIsRunning(false)
-        setTimer((prev) => ({...prev, seconds: sampleData.timers[PomodoroTimerStep[currentStep]]}))
+        setTimer((prev) => ({...prev, seconds: pomodoroParams.timers[PomodoroTimerStep[currentStep]]}))
     }
 
     useEffect(() => {
@@ -87,7 +94,7 @@ export default function Timer() {
                         window.appWindowHandler.setFocus()
                         switch (currentStep) {
                             case PomodoroTimerStep.work:
-                                if (sesssionsDone === sampleData.numberOfSessions) {
+                                if (sesssionsDone === pomodoroParams.numberOfSessions) {
                                     setCurrentStep(PomodoroTimerStep.longBreak)
                                 }
 
@@ -141,10 +148,19 @@ export default function Timer() {
                 </div>
                 <span>number of sessions done : {sesssionsDone}</span>
                 <div>
-                    <button onClick={handlePlay}>play</button>
-                    <button onClick={handlePause}>pause</button>
-                    <button onClick={handleReset}>reset</button>
+                    <div>
+                        {
+                            ! isRunning ?
+                            <button onClick={handlePlay}>play</button>
+                            :
+                            <button onClick={handlePause}>pause</button>
+                        }
+                        <button onClick={handleReset}>reset</button>
+                    </div>
+                    
+                    <NavLink to="/">cancel</NavLink>
                 </div>
+
             </div>
         </>
     )
