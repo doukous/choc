@@ -7,8 +7,8 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/timer" element={<Home />} />
-        <Route path="/" element={<Timer />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/timer" element={<Timer />} />
       </Routes>
     </HashRouter>
   )
