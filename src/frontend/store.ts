@@ -16,6 +16,6 @@ export const usePomodoroStore = create<PomodoroStore>((set) => ({
             numberOfSessions: 2
         },
 
-        changeConfig: (newConfig: Pomodoro) => set(() => ({pomodoroConfig: newConfig}))
+        changeConfig: (newConfig: Pomodoro) => set({pomodoroConfig: newConfig})
     })
 )
