@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react"
-import { NavLink } from "react-router"
 import { usePomodoroStore } from "../store"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router"
 
 const PomodoroTimerStep = {
     work: 'work',
@@ -13,6 +14,7 @@ type PomodoroStepType = (typeof PomodoroTimerStep)[keyof typeof PomodoroTimerSte
 
 export default function Timer() {
     const { pomodoroConfig } = usePomodoroStore()
+    const navigate = useNavigate()
 
     const [timer, setTimer] = useState({'minutes': 0, 'seconds': 0})
     const [isRunning, setIsRunning] = useState(false)
@@ -115,30 +117,30 @@ export default function Timer() {
     }, [isRunning])
 
     return (
-        <>
-            <div>
-                <h1>timer</h1>
+        <div className="flex flex-col items-center justify-center w-full h-full">
+            <div className="flex flex-col items-center gap-y-6">
+                <h1>Timer</h1>
+
                 <div>
-                    <span>{timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}</span>
-                    <span>:</span>
+                    <span className="text-5xl">{timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}</span>
                     <span>{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}</span>
                 </div>
-                <span>number of sessions done : {sesssionsDone}</span>
-                <div>
-                    <div>
+
+                <span>{sesssionsDone} / {pomodoroConfig.numberOfSessions} sessions</span>
+
+                <div className="flex flex-col items-stretch gap-y-4 w-48">
+                    <div className="flex justify-between gap-x-4">
                         {
                             ! isRunning ?
-                            <button onClick={handlePlay}>play</button>
+                            <Button onClick={handlePlay}>Play</Button>
                             :
-                            <button onClick={handlePause}>pause</button>
+                            <Button onClick={handlePause}>Pause</Button>
                         }
-                        <button onClick={handleReset}>reset</button>
+                        <Button onClick={handleReset}>Reset</Button>
                     </div>
-                    
-                    <NavLink to="/">cancel</NavLink>
+                    <Button onClick={() => navigate('/')}>Cancel</Button>
                 </div>
-
             </div>
-        </>
+        </div>
     )
 }

@@ -4,6 +4,7 @@ import Timer from "./pages/Timer"
 
 function App() {
   return (
+    
     <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
