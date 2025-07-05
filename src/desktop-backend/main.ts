@@ -18,7 +18,8 @@ function createWindow() {
                 '/dist/backend-electron/preload.cjs'
             )
         },
-        width: 400, height: 400
+        autoHideMenuBar: true,
+        width: 600, height: 600
     })
 
     if (! app.isPackaged)
@@ -27,7 +28,7 @@ function createWindow() {
     else
         mainWindow.loadFile(path.join(app.getAppPath(), 'dist/frontend/index.html'))
 
-    mainWindow.setPosition(1400, 200)
+    mainWindow.setPosition(1300, 200)
 }
 
 app.whenReady().then(() => {
