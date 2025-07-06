@@ -16,7 +16,8 @@ function createWindow() {
             preload: path.join(
                 app.getAppPath(), 
                 '/dist/backend-electron/preload.cjs'
-            )
+            ),
+            backgroundThrottling: false
         },
         width: 600, height: 600,
     }
