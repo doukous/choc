@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('appWindowHandler', {
 
 contextBridge.exposeInMainWorld('tray', {
     setTimerValue: (minute: number, second: number) => ipcRenderer.send('set-timer-value', minute, second),
+    initStartingTimerTray: (minute: number, second: number) => ipcRenderer.send('init-timer-tray', minute, second),
     onTrayAction: (callback: (action: string) => void) => ipcRenderer.on('set-action', (_: IpcRendererEvent, action: string) => callback(action)),
     setMainIcon: () => ipcRenderer.send('set-main-icon')
 })

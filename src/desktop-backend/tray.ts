@@ -32,56 +32,59 @@ function createTimerIcon(value: string) {
 let tray: Tray | null = null
 
 export function setMainTrayIcon() {
-    if (tray) {
+    if (tray)
         tray.setImage(path.join(iconsPath, 'icon-tray48x48.png'))
-        tray.setContextMenu(Menu.buildFromTemplate([]))
-    }
 
-    else {
-        tray = new Tray(
-            path.join(iconsPath, 'icon-tray48x48.png')
-        )
-    }
+    else
+        tray = new Tray(path.join(iconsPath, 'icon-tray48x48.png'))
+
+    tray.setContextMenu(Menu.buildFromTemplate([
+        {
+            label: 'Quit',
+            click: () => app.quit()
+        }
+    ]))
 }
 
-export function setTimerTrayValue(event: IpcMainEvent, minute: number, second: number) {
+export function initTimerTray(event: IpcMainEvent, minute: number, second: number) {
     const [stringMinute, stringSecond] = [
         minute < 10 ? `0${minute}` : minute,
         second < 10 ? `0${second}` : second,
     ]
 
     const stringValue = `${stringMinute}:${stringSecond}`
+    const buffer = createTimerIcon(stringValue)
+
+    const menu = Menu.buildFromTemplate(
+        [
+            {
+                label: 'Play', 
+                click: () => event.sender.send('set-action', 'play')
+            },
+            {
+                label: 'Pause', 
+                click: () => event.sender.send('set-action', 'pause')
+            },
+            {
+                label: 'Reset', 
+                click: () => event.sender.send('set-action', 'reset')
+            },
+        ]
+    )
+
+    tray?.setImage(nativeImage.createFromBuffer(buffer))
+    tray?.setContextMenu(menu)
+}
+
+export function setTimerTrayValue(_: IpcMainEvent, minute: number, second: number) {
+    const [stringMinute, stringSecond] = [
+        minute < 10 ? `0${minute}` : minute,
+        second < 10 ? `0${second}` : second,
+    ]
+    const stringValue = `${stringMinute}:${stringSecond}`
 
     const buffer = createTimerIcon(stringValue)
 
-    if (tray) {
-        tray.setImage(
-            nativeImage.createFromBuffer(buffer)
-        )
-    }
-
-    else {
-        const menu = Menu.buildFromTemplate(
-            [
-                {
-                    label: 'Play', 
-                    click: () => event.sender.send('set-action', 'play')
-                },
-                {
-                    label: 'Pause', 
-                    click: () => event.sender.send('set-action', 'pause')
-                },
-                {
-                    label: 'Reset', 
-                    click: () => event.sender.send('set-action', 'reset')
-                }
-            ]
-        )
-
-        tray = new Tray(
-            nativeImage.createFromBuffer(buffer)
-        )
-
-        tray.setContextMenu(menu)
-    }
+    
+    tray?.setImage(nativeImage.createFromBuffer(buffer))
 }

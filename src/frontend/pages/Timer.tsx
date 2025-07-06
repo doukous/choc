@@ -55,7 +55,8 @@ export default function Timer() {
     }, [])
 
     useEffect(() => {
-        window.tray.setTimerValue(timer.minutes, timer.seconds)
+        window.tray.initStartingTimerTray(timer.minutes, timer.seconds)
+        // window.tray.setTimerValue(timer.minutes, timer.seconds)
     }, [isRunning, timer])
 
     useEffect(() => {
@@ -94,6 +95,7 @@ export default function Timer() {
 
                     else if (values.seconds === 0) {
                         values.seconds = 59
+                        values.minutes -= 1
                     }
 
                     else {
