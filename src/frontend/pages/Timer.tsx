@@ -33,7 +33,7 @@ export default function Timer() {
 
     function handleReset() {
         setIsRunning(false)
-        setTimer((prev) => ({...prev, seconds: pomodoroConfig.timers[PomodoroTimerStep[currentStep]]}))
+        setTimer((prev) => ({...prev, minutes: pomodoroConfig.timers[PomodoroTimerStep[currentStep]]}))
     }
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export default function Timer() {
                                 break
                             
                             case PomodoroTimerStep.shortBreak:
-                                setSessionsDone(num => num + 0.5)
+                                setSessionsDone(num => num + 1)
                                 setCurrentStep(PomodoroTimerStep.work)
                                 break
                             
@@ -97,7 +97,7 @@ export default function Timer() {
                     }
 
                     else {
-                        values.seconds -= 0.5
+                        values.seconds -= 1
                     }
 
                     return {...values}
