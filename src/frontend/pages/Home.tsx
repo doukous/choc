@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { usePomodoroStore } from "../store"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
+import { StatChart } from "@/components/statChart"
 
 export default function Home() {
   const navigate = useNavigate()
@@ -34,7 +35,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full gap-y-8">
-      <div className="flex flex-col w-64 gap-y-8">
+
+      <div className="h-64 w-screen flex items-center justify-center">
+        <StatChart />
+      </div>
+
+      <div className="flex flex-col w-full gap-y-8">
         <div className="flex flex-col items-center gap-x-16">
           <label htmlFor="work-time">Work time</label>
 
