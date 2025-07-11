@@ -22,6 +22,7 @@ export default function Timer() {
     
     const [sesssionsDone, setSessionsDone] = useState(0)
     const [currentStep, setCurrentStep] = useState<PomodoroStepType>(PomodoroTimerStep.work)
+    const [pomodoroFinished, setPomodoroFinished] = useState(false)
 
     function handlePlay() {
         setIsRunning(true)    
@@ -31,9 +32,33 @@ export default function Timer() {
         setIsRunning(false)
     }
 
+    function handleSkip() {
+        switch (currentStep) {
+            case "work":
+                if (sesssionsDone < pomodoroConfig.numberOfSessions)
+                    setCurrentStep('shortBreak')
+                else
+                    setCurrentStep('longBreak')
+                break
+            case "shortBreak":
+                setSessionsDone(prev => prev + 1)
+                setCurrentStep('work')
+                break
+            case "longBreak":
+                setPomodoroFinished(true)
+                break
+        }
+    }
+
     function handleReset() {
         setIsRunning(false)
-        setTimer((prev) => ({...prev, minutes: pomodoroConfig.timers[PomodoroTimerStep[currentStep]]}))
+        setTimer(() => ({minutes: pomodoroConfig.timers[PomodoroTimerStep[currentStep]], seconds: 0}))
+    }
+
+    function handleRestart() {
+        setPomodoroFinished(false)
+        setSessionsDone(0)
+        setCurrentStep('work')
     }
 
     useEffect(() => {
@@ -89,6 +114,7 @@ export default function Timer() {
                                 break
                             
                             case PomodoroTimerStep.longBreak:
+                                setPomodoroFinished(true)
                                 break
                         }
                     }
@@ -122,26 +148,38 @@ export default function Timer() {
         <div className="flex flex-col items-center justify-center w-full h-full">
             <div className="flex flex-col items-center gap-y-6">
                 <h1>Timer</h1>
+                {
+                    ! pomodoroFinished ?
+                
+                    <>
+                        <div>
+                            <span className="text-5xl">{timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}</span>
+                            <span>{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}</span>
+                        </div>
 
-                <div>
-                    <span className="text-5xl">{timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}</span>
-                    <span>{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}</span>
-                </div>
+                        <span>{sesssionsDone} / {pomodoroConfig.numberOfSessions} sessions</span>
 
-                <span>{sesssionsDone} / {pomodoroConfig.numberOfSessions} sessions</span>
-
-                <div className="flex flex-col items-stretch gap-y-4 w-48">
-                    <div className="flex justify-between gap-x-4">
-                        {
-                            ! isRunning ?
-                            <Button onClick={handlePlay}>Play</Button>
-                            :
-                            <Button onClick={handlePause}>Pause</Button>
-                        }
-                        <Button onClick={handleReset}>Reset</Button>
-                    </div>
-                    <Button onClick={() => navigate('/')}>Cancel</Button>
-                </div>
+                        <div className="flex flex-col items-stretch gap-y-4 w-64">
+                            <div className="flex justify-between gap-x-4">
+                                {
+                                    ! isRunning ?
+                                    <Button onClick={handlePlay}>Play</Button>
+                                    :
+                                    <Button onClick={handlePause}>Pause</Button>
+                                }
+                                <Button onClick={handleReset}>Reset</Button>
+                                <Button onClick={handleSkip}>Skip</Button>
+                            </div>
+                            <Button onClick={() => navigate('/')}>Cancel</Button>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <h2>Session completed !</h2>
+                        <Button onClick={handleRestart}>Restart</Button>
+                        <Button onClick={() => navigate('/')}>Quit</Button>
+                    </>
+                }
             </div>
         </div>
     )
