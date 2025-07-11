@@ -1,7 +1,7 @@
 export {}
 
 declare global {
-  type Pomodoro = {
+  interface Pomodoro {
       title: string,
       timers: {
           work: number,
