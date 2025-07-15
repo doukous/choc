@@ -20,7 +20,7 @@ export default function Timer() {
     const [isRunning, setIsRunning] = useState(false)
     const timerId : React.RefObject<null | NodeJS.Timeout> = useRef(null)
     
-    const [sesssionsDone, setSessionsDone] = useState(0)
+    const [sesssionsDone, setSessionsDone] = useState(1)
     const [currentStep, setCurrentStep] = useState<PomodoroStepType>(PomodoroTimerStep.work)
     const [pomodoroFinished, setPomodoroFinished] = useState(false)
 
@@ -57,7 +57,7 @@ export default function Timer() {
 
     function handleRestart() {
         setPomodoroFinished(false)
-        setSessionsDone(0)
+        setSessionsDone(1)
         setCurrentStep('work')
     }
 
@@ -81,8 +81,12 @@ export default function Timer() {
 
     useEffect(() => {
         window.tray.initStartingTimerTray(timer.minutes, timer.seconds)
-        // window.tray.setTimerValue(timer.minutes, timer.seconds)
+    }, [])
+
+    useEffect(() => {
+        window.tray.setTimerValue(timer.minutes, timer.seconds)
     }, [isRunning, timer])
+
 
     useEffect(() => {
         handleReset()
