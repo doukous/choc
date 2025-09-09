@@ -4,7 +4,7 @@ import path from 'path'
 export let mainWindow : BrowserWindow | null = null
 
 function setFocusOnWindow() {
-    if(mainWindow) {
+    if(mainWindow && ! mainWindow.isFocused()) {
         mainWindow.show()
     }
 }
