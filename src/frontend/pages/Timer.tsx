@@ -69,29 +69,6 @@ export default function Timer() {
     }
 
     useEffect(() => {
-        window.tray.onTrayAction((action: string) => {
-            switch (action) {
-                case 'play':
-                    handlePlay()
-                    break
-                
-                case 'pause':
-                    handlePause()
-                    break
-                
-                case 'reset':
-                    handleReset()
-                    break
-            }
-        })
-    }, [])
-
-    useEffect(() => {
-        window.tray.initStartingTimerTray(timer.minutes, timer.seconds)
-        // window.tray.setTimerValue(timer.minutes, timer.seconds)
-    }, [isRunning, timer])
-
-    useEffect(() => {
         handleReset()
     }, [currentStep])
 
