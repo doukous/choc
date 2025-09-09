@@ -1,6 +1,5 @@
 import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain } from 'electron'
 import path from 'path'
-import { setTimerTrayValue, setMainTrayIcon, initTimerTray } from './tray.js'
 
 export let mainWindow : BrowserWindow | null = null
 
@@ -44,10 +43,7 @@ app.whenReady().then(() => {
     createWindow()
 
     ipcMain.on('set-focus', setFocusOnWindow)
-    ipcMain.on('set-timer-value', setTimerTrayValue)
-    ipcMain.on('set-main-icon', setMainTrayIcon)
-    ipcMain.on('init-timer-tray', initTimerTray)
-
+   
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
