@@ -19,7 +19,7 @@ function createWindow() {
             ),
             backgroundThrottling: false
         },
-        width: 600, height: 600,
+        width: 1000, height: 700,
     }
 
     if (app.isPackaged) {
@@ -37,7 +37,7 @@ function createWindow() {
 
     
     if (! app.isPackaged) 
-        mainWindow.setPosition(1300, 200)
+        mainWindow.setPosition(900, 200)
 }
 
 app.whenReady().then(() => {
