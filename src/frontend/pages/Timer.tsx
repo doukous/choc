@@ -3,11 +3,18 @@ import { useEffect, useState, useRef } from "react"
 import { usePomodoroStore } from "../store"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router"
+import { Badge } from "@/components/ui/badge"
 
 const PomodoroTimerStep = {
     work: 'work',
     shortBreak: 'shortBreak',
     longBreak: 'longBreak'
+} as const
+
+const stepDisplay = {
+    work: 'work',
+    shortBreak: 'short break',
+    longBreak: 'long break'
 } as const
 
 type PomodoroStepType = (typeof PomodoroTimerStep)[keyof typeof PomodoroTimerStep]
@@ -152,6 +159,7 @@ export default function Timer() {
                     ! pomodoroFinished ?
                 
                     <>
+                        <Badge variant="outline">{stepDisplay[currentStep]}</Badge>
                         <div>
                             <span className="text-5xl">{timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}</span>
                             <span>{timer.seconds < 10 ? `0${timer.seconds}` : timer.seconds}</span>
