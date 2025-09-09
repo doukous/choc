@@ -29,10 +29,6 @@ export default function Home() {
     navigate("/timer")
   }
 
-  useEffect(() => {
-    window.tray.setMainIcon()
-  }, [])
-
   return (
     <div className="flex flex-col items-center justify-center h-full w-full gap-y-8">
       <div className="flex flex-col w-full gap-y-8">
