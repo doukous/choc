@@ -9,11 +9,11 @@ export const usePomodoroStore = create<PomodoroStore>((set) => ({
         pomodoroConfig: {
             title: 'fallback',
             timers: {
-                work: 7,
-                shortBreak: 3,
-                longBreak: 4
+                work: 25,
+                shortBreak: 5,
+                longBreak: 15
             },
-            numberOfSessions: 2
+            numberOfSessions: 4
         },
 
         changeConfig: (newConfig: Pomodoro) => set({pomodoroConfig: newConfig})
