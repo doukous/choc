@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router"
 import { usePomodoroStore } from "../store"
 import { Button } from "@/components/ui/button"
@@ -28,12 +28,8 @@ export default function Home() {
     navigate("/timer")
   }
 
-  useEffect(() => {
-    window.tray.setMainIcon()
-  }, [])
-
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full gap-y-8">
+    <div className="flex flex-col items-center justify-center flex-1 w-full gap-y-8">
       <div className="flex flex-col w-full gap-y-8">
         <div className="flex flex-col items-center gap-x-16">
           <label htmlFor="work-time">Work time</label>
