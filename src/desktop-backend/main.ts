@@ -34,7 +34,6 @@ function extendWindow() {
 
 function toggleSize() {
   if (mainWindow) {
-    console.log("maximize state : ", mainWindow.isMaximized())
     if (!mainWindow.isMaximized()) mainWindow.maximize();
     else mainWindow.unmaximize();
   }
@@ -55,7 +54,6 @@ function createWindow() {
   };
 
   if (app.isPackaged) {
-    windowConfig.resizable = false;
     windowConfig.autoHideMenuBar = true;
   }
 
