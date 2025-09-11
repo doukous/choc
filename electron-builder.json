@@ -6,6 +6,15 @@
         "target": ["AppImage", "deb"],
         "category": "Utility"
     },
+    "win": {
+        "target": ["nsis", "portable"],
+        "icon": "./public/icons/icon.png"
+    },
+    "mac": {
+        "target": ["dmg", "zip"],
+        "icon": "./public/icons/icon.png",
+        "category": "public.app-category.utilities"
+    },
     "extraResources": [
         {
             "from": "public/",
