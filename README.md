@@ -30,7 +30,7 @@ Choc is a desktop application. It provides a simple and elegant way to stay focu
 
 ## Build
 
-To build the application for production, you can use the following commands:
+To build the application, you can use the following commands:
 
 *   **All platforms:**
 
