@@ -1,6 +1,5 @@
-import { useTitleBarVisibilityStore } from "@/store";
+import { useTitleBarVisibilityStore } from "../store";
 import type { CSSProperties } from "react";
-import { Button } from "./ui/button";
 import { Square, X, Minus } from "lucide-react";
 
 export default function TitleBar() {
@@ -11,31 +10,28 @@ export default function TitleBar() {
         className="h-8 border-b-1 border-black px-2 flex justify-end items-center"
         style={{ WebkitAppRegion: "drag" } as CSSProperties}
       >
-        <div className="flex gap-x-4" style={{ WebkitAppRegion: "no-drag" } as CSSProperties}>
-          <Button
+        <div
+          className="flex gap-x-4"
+          style={{ WebkitAppRegion: "no-drag" } as CSSProperties}
+        >
+          <button
             onClick={() => window.appWindowHandler.minimize()}
-            size="icon"
-            variant="ghost"
-            className="size-6"
+            className="size-5 btn p-0 pt-1"
           >
-            <Minus />
-          </Button>
-          <Button
+            <Minus size={16} />
+          </button>
+          <button
             onClick={() => window.appWindowHandler.toggleSize()}
-            size="icon"
-            variant="ghost"
-            className="size-6"
+            className="size-5 btn p-0"
           >
-            <Square />
-          </Button>
-          <Button
+            <Square size={14} />
+          </button>
+          <button
             onClick={() => window.appWindowHandler.close()}
-            size="icon"
-            variant="ghost"
-            className="size-6"
+            className="size-5 btn p-0"
           >
-            <X />
-          </Button>
+            <X size={14} />
+          </button>
         </div>
       </div>
     )

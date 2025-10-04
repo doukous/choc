@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
-import TimerCard from "@/components/timer/TimerCard";
+import TimerCard from "../components/TimerCard";
 
 const PomodoroTimerStep = {
   work: "work",
@@ -40,8 +39,8 @@ export default function Timer() {
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center gap-y-8">
           <h1>Session completed !</h1>
-          <Button onClick={handleRestart}>Restart</Button>
-          <Button onClick={() => navigate("/")}>Quit</Button>
+          <button className="btn" onClick={handleRestart}>Restart</button>
+          <button className="btn" onClick={() => navigate("/")}>Quit</button>
         </div>
       )}
     </>

@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { Dispatch, SetStateAction, CSSProperties } from "react";
 import type { NavigateFunction } from "react-router";
-import { usePomodoroStore, useTitleBarVisibilityStore } from "../../store";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { usePomodoroStore, useTitleBarVisibilityStore } from "../store";
 import {
   Play,
   Pause,
@@ -150,9 +148,7 @@ export default function TimerCard({
   return isShrinked ? (
     <div className="p-2 flex gap-x-2 justify-between">
       <div className="flex gap-x-2">
-        <Badge variant="outline" className="w-18">
-          {stepDisplay[currentStep]}
-        </Badge>
+        <span className="badge w-18">{stepDisplay[currentStep]}</span>
         <div>
           <span className="text-4xl">
             {timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}
@@ -164,29 +160,25 @@ export default function TimerCard({
       </div>
       <div className="flex gap-x-2">
         {!isRunning ? (
-          <Button onClick={handlePlay} size="icon" variant="secondary">
+          <button className="btn" onClick={handlePlay}>
             <Play />
-          </Button>
+          </button>
         ) : (
-          <Button onClick={handlePause} size="icon" variant="secondary">
+          <button className="btn" onClick={handlePause}>
             <Pause />
-          </Button>
+          </button>
         )}
-        <Button onClick={toggleShrinking} size="icon" variant="secondary">
+        <button className="btn" onClick={toggleShrinking}>
           <Expand />
-        </Button>
-        <Button
-          size="icon"
-          variant="secondary"
-          style={{ WebkitAppRegion: "drag" } as CSSProperties}
-        >
+        </button>
+        <button style={{ WebkitAppRegion: "drag" } as CSSProperties}>
           <Grip />
-        </Button>
+        </button>
       </div>
     </div>
   ) : (
     <div className="flex-1 flex flex-col justify-center items-center gap-y-6">
-      <Badge className="w-18" variant="outline">{stepDisplay[currentStep]}</Badge>
+      <span className="w-18 badge">{stepDisplay[currentStep]}</span>
       <div>
         <span className="text-5xl">
           {timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}
@@ -199,30 +191,26 @@ export default function TimerCard({
       </span>
       <div className="grid grid-cols-3 gap-4">
         {!isRunning ? (
-          <Button onClick={handlePlay} size="icon" variant="secondary">
+          <button className="btn" onClick={handlePlay}>
             <Play />
-          </Button>
+          </button>
         ) : (
-          <Button onClick={handlePause} size="icon" variant="secondary">
+          <button className="btn" onClick={handlePause}>
             <Pause />
-          </Button>
+          </button>
         )}
-        <Button onClick={handleReset} size="icon" variant="secondary">
+        <button className="btn" onClick={handleReset}>
           <RotateCcw />
-        </Button>
-        <Button onClick={handleSkip} size="icon" variant="secondary">
+        </button>
+        <button className="btn" onClick={handleSkip}>
           <SkipForward />
-        </Button>
-        <Button onClick={toggleShrinking} size="icon" variant="secondary">
+        </button>
+        <button className="btn" onClick={toggleShrinking}>
           <Shrink />
-        </Button>
-        <Button
-          className="col-span-2"
-          onClick={() => navigate("/")}
-          variant="destructive"
-        >
+        </button>
+        <button className="col-span-2 btn" onClick={() => navigate("/")}>
           Cancel
-        </Button>
+        </button>
       </div>
     </div>
   );

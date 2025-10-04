@@ -1,31 +1,29 @@
-import { useState } from "react"
-import { useNavigate } from "react-router"
-import { usePomodoroStore } from "../store"
-import { Button } from "@/components/ui/button"
-import { Slider } from "@/components/ui/slider"
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { usePomodoroStore } from "../store";
 
 export default function Home() {
-  const navigate = useNavigate()
-  const {  changeConfig } = usePomodoroStore()
+  const navigate = useNavigate();
+  const { changeConfig } = usePomodoroStore();
 
-  const [workTime, setWorkTime] = useState(25)
-  const [shortBreakTime, setShortBreakTime] = useState(5)
-  const [longBreakTime, setLongBreakTime] = useState(15)
-  const [sessionsNumber, setSessionsNumber] = useState(4)
+  const workTime = useState(25)[0];
+  const shortBreakTime = useState(5)[0];
+  const longBreakTime = useState(15)[0];
+  const sessionsNumber = useState(4)[0];
 
   function goToTimer() {
     const data: Pomodoro = {
-      title: 'default',
+      title: "default",
       timers: {
         work: workTime,
         shortBreak: shortBreakTime,
         longBreak: longBreakTime,
       },
-      numberOfSessions: sessionsNumber
-    }
+      numberOfSessions: sessionsNumber,
+    };
 
-    changeConfig(data)
-    navigate("/timer")
+    changeConfig(data);
+    navigate("/timer");
   }
 
   return (
@@ -35,13 +33,12 @@ export default function Home() {
           <label htmlFor="work-time">Work time</label>
 
           <div className="flex items-center w-md gap-x-4 justify-between">
-            <Slider 
-              min={5} 
-              max={120} 
-              defaultValue={[workTime]}
+            <input
+              type="range"
+              min={5}
+              max={120}
               step={1}
-              onValueChange={(val) => (setWorkTime(val[0]))}
-              className="w-90"
+              className="w-90 range range-xs"
               name="work-time"
             />
             <span>{workTime} min</span>
@@ -52,13 +49,12 @@ export default function Home() {
           <label htmlFor="short-break-time">Short break time</label>
 
           <div className="flex items-center w-md gap-x-4 justify-between">
-            <Slider 
-              min={1} 
+            <input
+              type="range"
+              min={1}
               max={30}
-              step={1} 
-              defaultValue={[shortBreakTime]}
-              onValueChange={(val) => (setShortBreakTime(val[0]))}
-              className="w-90"
+              step={1}
+              className="w-90 range range-xs"
               name="work-time"
             />
             <span>{shortBreakTime} min</span>
@@ -69,13 +65,12 @@ export default function Home() {
           <label htmlFor="long-break-time">Long break time</label>
 
           <div className="flex items-center w-md gap-x-4 justify-between">
-            <Slider 
-              min={5} 
+            <input
+              type="range"
+              min={5}
               max={60}
-              step={1} 
-              value={[longBreakTime]}
-              onValueChange={(val) => (setLongBreakTime(val[0]))}
-              className="w-90"
+              step={1}
+              className="w-90 range range-xs"
               name="long-break-time"
             />
             <span>{longBreakTime} min</span>
@@ -86,12 +81,11 @@ export default function Home() {
           <label htmlFor="num-of-sessions">Number of sessions</label>
 
           <div className="flex items-center w-md gap-x-4 justify-between">
-            <Slider 
-              min={2} 
-              max={8} 
-              defaultValue={[sessionsNumber]}
-              onValueChange={(val) => (setSessionsNumber(val[0]))}
-              className="w-90"
+            <input
+              type="range"
+              min={2}
+              max={8}
+              className="w-90 range range-xs"
               name="num-of-sessions"
             />
             <span>{sessionsNumber} sessions</span>
@@ -99,7 +93,9 @@ export default function Home() {
         </div>
       </div>
 
-      <Button onClick={goToTimer}>Start pomodoro</Button>
+      <button className="btn" onClick={goToTimer}>
+        Start pomodoro
+      </button>
     </div>
-  )
+  );
 }
