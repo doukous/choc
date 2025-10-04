@@ -3,9 +3,18 @@
   "private": true,
   "version": "0.2.0",
   "author": "Mohamed Doucouré <mohamed.doucoure@protonmail.com>",
-  "description": "an pomodoro timer and a tasks manager",
+  "description": "A pomodoro timer and a tasks manager",
   "type": "module",
   "main": "dist/backend-electron/main.js",
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "doukous",
+        "repo": "choc"
+      }
+    ]
+  },
   "scripts": {
     "start": "npm-run-all --parallel dev:browser dev:electron",
     "start:nodemon": "nodemon -w ./src/desktop-backend -e ts,mts --exec 'npm start'",
@@ -23,6 +32,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "daisyui": "^5.1.27",
+    "electron-updater": "^6.6.2",
     "lucide-react": "^0.544.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
