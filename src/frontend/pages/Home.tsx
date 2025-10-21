@@ -4,12 +4,18 @@ import { usePomodoroStore } from "../store";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { changeConfig } = usePomodoroStore();
+  const { changeConfig, pomodoroConfig } = usePomodoroStore();
 
-  const workTime = useState(25)[0];
-  const shortBreakTime = useState(5)[0];
-  const longBreakTime = useState(15)[0];
-  const sessionsNumber = useState(4)[0];
+  const [workTime, setWorkTime] = useState(pomodoroConfig.timers.work);
+  const [shortBreakTime, setShortBreakTime] = useState(
+    pomodoroConfig.timers.shortBreak
+  );
+  const [longBreakTime, setLongBreakTime] = useState(
+    pomodoroConfig.timers.longBreak
+  );
+  const [sessionsNumber, setSessionsNumber] = useState(
+    pomodoroConfig.numberOfSessions
+  );
 
   function goToTimer() {
     const data: Pomodoro = {
@@ -38,8 +44,11 @@ export default function Home() {
               min={5}
               max={120}
               step={1}
+              value={workTime}
+              onChange={(event) => setWorkTime(Number(event.target.value))}
               className="w-90 range range-xs"
               name="work-time"
+              id="work-time"
             />
             <span>{workTime} min</span>
           </div>
@@ -54,6 +63,10 @@ export default function Home() {
               min={1}
               max={30}
               step={1}
+              value={shortBreakTime}
+              onChange={(event) =>
+                setShortBreakTime(Number(event.target.value))
+              }
               className="w-90 range range-xs"
               name="work-time"
             />
@@ -70,6 +83,8 @@ export default function Home() {
               min={5}
               max={60}
               step={1}
+              value={longBreakTime}
+              onChange={(event) => setLongBreakTime(Number(event.target.value))}
               className="w-90 range range-xs"
               name="long-break-time"
             />
@@ -85,6 +100,10 @@ export default function Home() {
               type="range"
               min={2}
               max={8}
+              value={sessionsNumber}
+              onChange={(event) =>
+                setSessionsNumber(Number(event.target.value))
+              }
               className="w-90 range range-xs"
               name="num-of-sessions"
             />
