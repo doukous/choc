@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
 @plugin "daisyui/theme" {
   name: "choclight";
   default: true;
@@ -35,4 +34,10 @@
   --border: 1px;
   --depth: 1;
   --noise: 0;
+}
+
+@custom-variant fullscreen {
+  &:-webkit-full-screen {
+    @slot;
+  }
 }

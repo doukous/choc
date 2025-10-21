@@ -41,6 +41,11 @@ function toggleSize() {
 
 function createWindow() {
   const windowConfig: BrowserWindowConstructorOptions = {
+    width: 600,
+    height: 600,
+    frame: false,
+    transparent: true,
+
     webPreferences: {
       preload: path.join(
         app.getAppPath(),
@@ -48,9 +53,6 @@ function createWindow() {
       ),
       backgroundThrottling: false,
     },
-    width: 600,
-    height: 600,
-    frame: false,
   };
 
   if (app.isPackaged) {
