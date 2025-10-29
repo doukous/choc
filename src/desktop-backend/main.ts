@@ -7,10 +7,9 @@ import {
 import path from "path";
 
 let mainWindow: BrowserWindow | null = null;
-let isShrinked = false;
 
 function setFocusOnWindow() {
-  if (isShrinked) extendWindow();
+  // if (isShrinked) extendWindow();
   if (mainWindow && !mainWindow.isFocused()) mainWindow.show();
 }
 
@@ -19,16 +18,14 @@ function shrinkWindow() {
     mainWindow.setSize(310, 58);
     mainWindow.setResizable(false);
     mainWindow.setAlwaysOnTop(true);
-    isShrinked = true;
   }
 }
 
 function extendWindow() {
   if (mainWindow) {
-    mainWindow.setSize(600, 600);
     mainWindow.setResizable(true);
+    mainWindow.setSize(600, 600);
     mainWindow.setAlwaysOnTop(false);
-    isShrinked = false;
   }
 }
 
