@@ -6,15 +6,6 @@
   "description": "A pomodoro timer and a tasks manager",
   "type": "module",
   "main": "dist/backend-electron/main.js",
-  "build": {
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "doukous",
-        "repo": "choc"
-      }
-    ]
-  },
   "scripts": {
     "start": "npm-run-all --parallel dev:browser dev:electron",
     "start:nodemon": "nodemon -w ./src/desktop-backend -e ts,mts --exec 'npm start'",

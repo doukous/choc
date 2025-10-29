@@ -1,17 +1,28 @@
 {
     "appId": "com.doukous.choc",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
     "icon": "./public/icons/icon@512x512.png",
     "linux": {
-        "target": ["AppImage", "deb"],
+        "target": [
+            "AppImage",
+            "deb"
+        ],
         "category": "Utility"
     },
     "win": {
-        "target": ["nsis", "portable"],
+        "target": [
+            "nsis",
+            "portable"
+        ],
         "icon": "./public/icons/icon.png"
     },
     "mac": {
-        "target": ["dmg", "zip"],
+        "target": [
+            "dmg",
+            "zip"
+        ],
         "icon": "./public/icons/icon.png",
         "category": "public.app-category.utilities"
     },
