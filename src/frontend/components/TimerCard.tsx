@@ -49,15 +49,21 @@ export default function TimerCard({
   const [isRunning, setIsRunning] = useState(false);
   const timerId: React.RefObject<null | NodeJS.Timeout> = useRef(null);
 
-  const { toggleTitleBarVisibility } = useTitleBarVisibilityStore();
+  const { showTitleBar, hideTitleBar } = useTitleBarVisibilityStore();
   const [isShrinked, setIsShrinked] = useState(false);
 
   function toggleShrinking() {
-    toggleTitleBarVisibility();
-    setIsShrinked((prev) => !prev);
+    setIsShrinked(prev => !prev);
 
-    if (isShrinked) window.appWindowHandler.extend();
-    else window.appWindowHandler.shrink();
+    if (isShrinked) {
+      window.appWindowHandler.extend();
+      showTitleBar();
+    }
+
+    else {
+      window.appWindowHandler.shrink()
+      hideTitleBar();  
+    };
   }
 
   function handlePlay() {
@@ -100,12 +106,15 @@ export default function TimerCard({
   useEffect(() => {
     if (isRunning) {
       timerId.current = setInterval(() => {
-        setTimer((prev) => {
+        setTimer(prev => {
           const values = { ...prev };
 
           if (values.minutes === 0 && values.seconds === 0) {
             window.appWindowHandler.setFocus();
-
+            setIsShrinked(false)
+            window.appWindowHandler.extend()
+            showTitleBar()
+            
             switch (currentStep) {
               case PomodoroTimerStep.work:
                 if (sessionsDone === pomodoroConfig.numberOfSessions) {
@@ -116,7 +125,7 @@ export default function TimerCard({
                 break;
 
               case PomodoroTimerStep.shortBreak:
-                setSessionsDone((num) => num + 1);
+                setSessionsDone(num => num + 1);
                 setCurrentStep(PomodoroTimerStep.work);
                 break;
 
@@ -147,8 +156,8 @@ export default function TimerCard({
 
   return isShrinked ? (
     <div className="p-2 flex gap-x-2 justify-between">
-      <div className="flex gap-x-2">
-        <span className="badge w-18">{stepDisplay[currentStep]}</span>
+      <div className="flex gap-x-1 items-center">
+        <span className="badge ring-1 ring-gray-200 text-xs text-center font-semibold w-24 h-full">{stepDisplay[currentStep]}</span>
         <div>
           <span className="text-4xl">
             {timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}
@@ -158,27 +167,29 @@ export default function TimerCard({
           </span>
         </div>
       </div>
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 items-center">
         {!isRunning ? (
-          <button className="btn" onClick={handlePlay}>
-            <Play />
+          <button className="btn p-2 size-9 rounded-xl" onClick={handlePlay}>
+            <Play size={14} />
           </button>
         ) : (
-          <button className="btn" onClick={handlePause}>
-            <Pause />
+          <button className="btn p-2 size-9 rounded-xl" onClick={handlePause}>
+            <Pause size={14}  />
           </button>
         )}
-        <button className="btn" onClick={toggleShrinking}>
-          <Expand />
+        <button className="btn p-2 size-9 rounded-xl" onClick={toggleShrinking}>
+          <Expand size={14} />
         </button>
-        <button style={{ WebkitAppRegion: "drag" } as CSSProperties}>
-          <Grip />
+        <button className="btn p-2 size-9 rounded-xl" style={{ WebkitAppRegion: "drag" } as CSSProperties}>
+          <Grip size={14} />
         </button>
       </div>
     </div>
-  ) : (
+  ) 
+  : 
+  (
     <div className="flex-1 flex flex-col justify-center items-center gap-y-6">
-      <span className="w-18 badge">{stepDisplay[currentStep]}</span>
+      <span className="ring-1 ring-gray-400 px-3 py-0.2 rounded-xl">{stepDisplay[currentStep]}</span>
       <div>
         <span className="text-5xl">
           {timer.minutes < 10 ? `0${timer.minutes}` : timer.minutes}
@@ -208,7 +219,7 @@ export default function TimerCard({
         <button className="btn" onClick={toggleShrinking}>
           <Shrink />
         </button>
-        <button className="col-span-2 btn" onClick={() => navigate("/")}>
+        <button className="col-span-2 btn btn-error" onClick={() => navigate("/")}>
           Cancel
         </button>
       </div>

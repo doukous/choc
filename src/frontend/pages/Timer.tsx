@@ -8,8 +8,7 @@ const PomodoroTimerStep = {
   longBreak: "longBreak",
 } as const;
 
-type PomodoroStepType =
-  (typeof PomodoroTimerStep)[keyof typeof PomodoroTimerStep];
+type PomodoroStepType = (typeof PomodoroTimerStep)[keyof typeof PomodoroTimerStep];
 
 export default function Timer() {
   const [sesssionsDone, setSessionsDone] = useState(1);

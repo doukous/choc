@@ -5,7 +5,7 @@ import TitleBar from "./components/TitleBar";
 
 function App() {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <TitleBar />
       <HashRouter>
         <Routes>

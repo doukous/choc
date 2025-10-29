@@ -7,7 +7,7 @@ export default function TitleBar() {
   return (
     titleBarVisibility && (
       <div
-        className="h-8 border-b-1 border-black px-2 flex justify-end items-center"
+        className="h-8 border-b-2 border-gray-200 px-2 flex justify-end items-center"
         style={{ WebkitAppRegion: "drag" } as CSSProperties}
       >
         <div

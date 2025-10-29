@@ -19,15 +19,18 @@ export const usePomodoroStore = create<PomodoroStore>((set) => ({
   changeConfig: (newConfig: Pomodoro) => set({ pomodoroConfig: newConfig }),
 }));
 
-type titleBarVisibilityStore = {
+type TitleBarVisibilityStore = {
   titleBarVisibility: boolean;
-  toggleTitleBarVisibility: () => void;
+  showTitleBar: () => void;
+  hideTitleBar: () => void;
 };
 
-export const useTitleBarVisibilityStore = create<titleBarVisibilityStore>(
+export const useTitleBarVisibilityStore = create<TitleBarVisibilityStore>(
   (set) => ({
     titleBarVisibility: true,
-    toggleTitleBarVisibility: () =>
-      set((state) => ({ titleBarVisibility: !state.titleBarVisibility })),
+    showTitleBar: () =>
+      set(state => ({...state, titleBarVisibility: true })),
+    hideTitleBar: () =>
+      set(state => ({ ...state, titleBarVisibility: false })),
   })
 );
